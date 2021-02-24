@@ -29,9 +29,12 @@ async def event_message(ctx):
 
     await bot.handle_commands(ctx)
 
-    m = re.search(r'^([a-tA-T]{1})([0-9]{1,2})$', ctx.content)
-    if m:
-      result = tsumego.place_stone(m.group(1), m.group(2), ctx.author.name)
+    m = re.findall(r'[ ,]*[a-tA-T]{1}[0-9]{1,2}', ctx.content)
+    for coords in m:
+      #Remove potentially leading commas and spaces
+      coords = coords.strip(", ")
+      #Submit move, first character is coordinate letter, second (and possibly third) character is number part
+      result = tsumego.place_stone(coords[0:1], coords[1:3], ctx.author.name)
       await ctx.channel.send(result)
 
 
