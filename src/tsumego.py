@@ -19,9 +19,20 @@ class Tsumego(object):
         self.driver = webdriver.Chrome()
         self.driver.get(self.url)
         self.players = points.p
+        self.time = time.localtime()
 
     def fancy_click(self, id):
         self.driver.execute_script("arguments[0].click();", self.driver.find_element_by_id(id))
+
+    def next(self):
+        time_elapsed = time.mktime(time.localtime()) - time.mktime(self.time)
+        if time_elapsed > 120:
+            self.fancy_click('solutionButton')
+            t = threading.Thread(target=self.load_next)
+            t.start()
+            return 0
+        else:
+            return 120 - time_elapsed
 
     def load_next(self):
         time.sleep(5)
@@ -53,6 +64,7 @@ class Tsumego(object):
             return OTHER
 
     def place_stone(self, x, y, u):
+        self.time = time.localtime()
         xc = x.lower()
         yc = chr(ord('a') - 1 + int(y))
         try:

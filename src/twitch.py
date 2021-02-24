@@ -19,14 +19,11 @@ bot = commands.Bot(
 async def event_ready():
     'Called once when the bot goes online.'
     print(f"{os.environ['BOT_NICK']} is online!")
-    ws = bot._ws  # this is only needed to send messages within event_ready
-    # await ws.send_privmsg(os.environ['CHANNEL'], f"/me is here!")
 
 @bot.event
 async def event_message(ctx):
     'Runs every time a message is sent in chat.'
 
-    # make sure the bot ignores itself and the streamer
     if ctx.author.name.lower() == os.environ['BOT_NICK'].lower():
         return
 
@@ -40,7 +37,20 @@ async def event_message(ctx):
 
 @bot.command(name='help')
 async def help(ctx):
-    await ctx.send("Enter the coordinates where you'd like to play in the chat (e.g. A1). If you need to enter the same coordinate twice in a row, you can switch between upper and lower case. Other available commands: !link: URL for current problem; !review: URL of last problem; !rank change the rank of the next problem.")
+    help_text = """
+Enter the coordinates where you'd like to play in the chat (e.g. A1). 
+If you need to enter the same coordinate twice in a row, you can switch between upper and lower case. 
+Other available commands: 
+!link: URL for current problem; 
+!review: URL of last problem; 
+!rank: change the rank of the next problem (e.g. !rank 10k);
+!next: skip to the next problem (can only be used after 2 minutes since last move).
+    """
+    await ctx.send(help_text)
+
+@bot.command(name='code')
+async def code(ctx):
+    await ctx.send('https://github.com/bani/twitch-tsumego')
 
 @bot.command(name='review')
 async def review(ctx):
@@ -49,6 +59,12 @@ async def review(ctx):
 @bot.command(name='link')
 async def link(ctx):
     await ctx.send(tsumego.driver.current_url)
+
+@bot.command(name='next')
+async def next(ctx):
+    wait = tsumego.next()
+    if wait > 0:
+        await ctx.send(f'Please wait {int(wait)} seconds before trying to go to the next problem.')
 
 @bot.command(name='rank')
 async def rank(ctx):
