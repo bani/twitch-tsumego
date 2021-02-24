@@ -87,7 +87,8 @@ class Tsumego(object):
             p = re.search(r'p=([0-9]+)', self.url)
             message = f"HSWP {x}{y} was correct for problem {p.group(1)}! SeemsGood"
         elif result == BAD:
-            self.players[u]-= 1
+            if self.players[u] > 0:
+                self.players[u]-= 1
             message = f"{x}{y}? Try again! NotLikeThis"
         elif result == CONTINUE:
             message = f"{x}{y}? Keep going... O_o"
