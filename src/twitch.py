@@ -45,7 +45,7 @@ async def event_message(ctx):
 async def help(ctx):
     help_text = """
 Enter the coordinates where you'd like to play in the chat (e.g. A1). 
-If you need to enter the same coordinate twice in a row, you can switch between upper and lower case. 
+If you need to enter the same coordinate twice in a row, you can switch between upper and lower case. You can also enter multiple coordinates in one message.
 Other available commands: 
 !link: URL for current problem; 
 !review: URL of last problem; 
@@ -53,10 +53,6 @@ Other available commands:
 !next: skip to the next problem (can only be used after 2 minutes since last move).
     """
     await ctx.send(help_text)
-
-@bot.command(name='code')
-async def code(ctx):
-    await ctx.send('https://github.com/bani/twitch-tsumego')
 
 @bot.command(name='review')
 async def review(ctx):
@@ -82,6 +78,13 @@ async def rank(ctx):
         else:
             await ctx.send('Invalid rank. Use 5d to 20k. E.g. !rank 10k')
 
+@bot.command(name='code')
+async def code(ctx):
+    await ctx.send('https://github.com/bani/twitch-tsumego')
+
+@bot.command(name='donate')
+async def donate(ctx):
+    await ctx.send('If you\'d like to contribute, I support the following orgs: https://supporters.eff.org/donate/ | https://donate.mozilla.org/ | https://donate.wikimedia.org')
 
 if __name__ == "__main__":
     tsumego = tsumego.Tsumego()
