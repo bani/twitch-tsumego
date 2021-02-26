@@ -51,8 +51,15 @@ Other available commands:
 !review: URL of last problem; 
 !rank: change the rank of the next problem (e.g. !rank 10k);
 !next: skip to the next problem (can only be used after 2 minutes since last move).
+!points: check your current points
     """
     await ctx.send(help_text)
+
+@bot.command(name='points')
+async def points(ctx):
+    user = ctx.message.author.name
+    points = tsumego.players[user] if user in tsumego.players else 0
+    await ctx.send(f"{user} has {points} points")
 
 @bot.command(name='review')
 async def review(ctx):
