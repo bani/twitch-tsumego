@@ -43,17 +43,20 @@ async def event_message(ctx):
 
 @bot.command(name='help')
 async def help(ctx):
-    help_text = """
+    help_text1 = """
 Enter the coordinates where you'd like to play in the chat (e.g. A1). 
 If you need to enter the same coordinate twice in a row, you can switch between upper and lower case. You can also enter multiple coordinates in one message.
 Other available commands: 
+    """
+    help_text2 = """
 !link: URL for current problem; 
 !review: URL of last problem; 
 !rank: change the rank of the next problem (e.g. !rank 10k);
 !next: skip to the next problem (can only be used after 2 minutes since last move).
 !points: check your current points
     """
-    await ctx.send(help_text)
+    await ctx.send(help_text1)
+    await ctx.send(help_text2)
 
 @bot.command(name='points')
 async def points(ctx):

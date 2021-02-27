@@ -15,11 +15,16 @@ OTHER = 3
 class Tsumego(object):
 
     def __init__(self):
-        self.url = 'https://blacktoplay.com/?p=608'
+        self.url = 'https://blacktoplay.com/?p=1000'
         self.driver = webdriver.Chrome()
         self.driver.get(self.url)
         self.players = points.p
         self.time = time.localtime()
+        self.wait = False
+        rank.update(self.players, None)
+        time.sleep(1)
+        self.update_rank('12k')
+        self.load_next(0)
 
     def fancy_click(self, id):
         self.driver.execute_script("arguments[0].click();", self.driver.find_element_by_id(id))
@@ -28,16 +33,18 @@ class Tsumego(object):
         time_elapsed = time.mktime(time.localtime()) - time.mktime(self.time)
         if time_elapsed > 120:
             self.fancy_click('solutionButton')
-            t = threading.Thread(target=self.load_next)
+            t = threading.Thread(target=self.load_next, args=(0,))
             t.start()
             return 0
         else:
             return 120 - time_elapsed
 
-    def load_next(self):
-        time.sleep(5)
+    def load_next(self, pause):
+        self.wait = True
+        time.sleep(pause)
         self.fancy_click('loadButton')
         time.sleep(2)
+        self.wait = False
         for i in range(1,20):
             for j in range (1,20):
                 id = f"{chr(ord('a') - 1 + i)}{chr(ord('a') - 1 + j)}"
@@ -52,7 +59,7 @@ class Tsumego(object):
     def solution_check(self):
         solution_check = self.driver.find_element_by_id('solutionContainer')
         if solution_check.text == 'Completed!':
-            t = threading.Thread(target=self.load_next)
+            t = threading.Thread(target=self.load_next, args=(5,))
             t.start()
             return GOOD
         elif solution_check.text == 'Wrong. Keep trying.':
@@ -64,6 +71,8 @@ class Tsumego(object):
             return OTHER
 
     def place_stone(self, x, y, u):
+        if self.wait:
+            return "Please wait for the next problem to load."
         self.time = time.localtime()
         xc = x.lower()
         yc = chr(ord('a') - 1 + int(y))
