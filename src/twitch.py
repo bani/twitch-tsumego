@@ -92,9 +92,6 @@ async def rank(ctx):
 async def code(ctx):
     await ctx.send('https://github.com/bani/twitch-tsumego')
 
-@bot.command(name='donate')
-async def donate(ctx):
-    await ctx.send('If you\'d like to contribute, I support the following orgs: https://supporters.eff.org/donate/ | https://donate.mozilla.org/ | https://donate.wikimedia.org')
 
 if __name__ == "__main__":
     tsumego = tsumego.Tsumego()
