@@ -25,7 +25,7 @@ class Tsumego(object):
         self.wait = False
         rank.update(self.players, None)
         time.sleep(1)
-        self.update_rank('12k')
+        self.update_rank('12 kyu')
         self.load_next(0)
 
     def fancy_click(self, id):
