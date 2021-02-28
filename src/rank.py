@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import PySimpleGUI as sg
 import threading
 import time
@@ -22,7 +24,7 @@ def update(players, last):
         if i > 5:
             break
     if last:
-        window[0].update(f"{last} ({players[last]})".ljust(W))
+        window[0].update(f"{last} ({players[last] if last != 'beginnergo' else '-∞'})".ljust(W))
         
     window.refresh()
 

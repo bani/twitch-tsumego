@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import os
 import re
 from twitchio.ext import commands
@@ -62,6 +64,7 @@ Other available commands:
 async def points(ctx):
     user = ctx.message.author.name
     points = tsumego.players[user] if user in tsumego.players else 0
+    if user == 'beginnergo': points = '-∞'
     await ctx.send(f"{user} has {points} points")
 
 @bot.command(name='review')
@@ -81,12 +84,21 @@ async def next(ctx):
 @bot.command(name='rank')
 async def rank(ctx):
     msg = ctx.message.clean_content
-    m = re.search(r'rank (.+)', msg)
+    m = re.search(r'rank ([0-9]{1,2}[kd])', msg)
     if m:
-        if tsumego.update_rank(m.group(1)):
+        r = m.group(1)
+        v = f"{r[:-1]} {'kyu' if r[-1] == 'k' else 'dan'}"
+
+        if tsumego.update_rank(v):
             await ctx.send('Rank updated, it\'ll be used on next problem.')
         else:
             await ctx.send('Invalid rank. Use 5d to 20k. E.g. !rank 10k')
+    else:
+        await ctx.send('Use format !rank 10k')
+
+@bot.command(name='coords')
+async def coords(ctx):
+    tsumego.coordinates()
 
 @bot.command(name='code')
 async def code(ctx):

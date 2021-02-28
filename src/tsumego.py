@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import Select
@@ -43,8 +45,10 @@ class Tsumego(object):
         self.wait = True
         time.sleep(pause)
         self.fancy_click('loadButton')
-        time.sleep(2)
+        time.sleep(1)
         self.wait = False
+
+    def coordinates(self):
         for i in range(1,20):
             for j in range (1,20):
                 id = f"{chr(ord('a') - 1 + i)}{chr(ord('a') - 1 + j)}"
