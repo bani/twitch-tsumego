@@ -41,6 +41,8 @@ async def event_message(ctx):
             await ctx.channel.send(result)
             if 'Keep going' not in result:
                 break
+    else:
+        print(f"{ctx.author.name}: {ctx.content}")
 
 
 @bot.command(name='help')
@@ -51,10 +53,10 @@ If you need to enter the same coordinate twice in a row, you can switch between 
 Other available commands: 
     """
     help_text2 = """
-!link: URL for current problem; 
-!review: URL of last problem; 
 !rank: change the rank of the next problem (e.g. !rank 10k);
 !next: skip to the next problem (can only be used after 2 minutes since last move).
+!review: URL of last problem; 
+!link: URL for current problem; 
 !points: check your current points
     """
     await ctx.send(help_text1)
@@ -99,6 +101,17 @@ async def rank(ctx):
 @bot.command(name='coords')
 async def coords(ctx):
     tsumego.coordinates()
+
+@bot.command(name='save')
+async def save(ctx):
+    print(tsumego.players)
+
+@bot.command(name='leaderboard')
+async def leaderboard(ctx):
+    i = 1
+    for (k,v) in sorted(tsumego.players.items(), key=lambda x: -x[1]):
+        print(f"{str(i).rjust(2)}. {k.ljust(20)} {str(v).rjust(3)}")
+        i+=1
 
 @bot.command(name='code')
 async def code(ctx):

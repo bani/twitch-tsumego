@@ -108,7 +108,6 @@ class Tsumego(object):
         else:
             message = f"{x}{y}?! WutFace"
         
-        print(self.players)
         pickle.dump( self.players, open( "leaderboard.p", "wb" ) )
         rank.update(self.players, last)
         
