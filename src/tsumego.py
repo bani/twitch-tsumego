@@ -7,7 +7,7 @@ import time
 import re
 import rank
 import threading
-import points
+import pickle
 
 GOOD = 1
 BAD = 0
@@ -20,7 +20,7 @@ class Tsumego(object):
         self.url = 'https://blacktoplay.com/?p=1000'
         self.driver = webdriver.Chrome()
         self.driver.get(self.url)
-        self.players = points.p
+        self.players = pickle.load( open( "leaderboard.p", "rb" ) )
         self.time = time.localtime()
         self.wait = False
         rank.update(self.players, None)
@@ -109,6 +109,7 @@ class Tsumego(object):
             message = f"{x}{y}?! WutFace"
         
         print(self.players)
+        pickle.dump( self.players, open( "leaderboard.p", "wb" ) )
         rank.update(self.players, last)
         
         return message

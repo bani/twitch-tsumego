@@ -2,7 +2,7 @@
 
 Twitch bot to play Tsumegos from [Black to Play](https://blacktoplay.com/)
 
-### Running the bot
+### Set up
 
 You can install the main libraries to run this project with
 `pip install -r requirements.txt`
@@ -19,12 +19,15 @@ BOT_PREFIX=!
 CHANNEL=abc
 ```
 
-#### points.py
+#### leaderboard.p
 
-Initialize it with:
+This is the pickle file with the players and points. You can initialize it with:
 ```
+import pickle
 p = {}
+pickle.dump( p, open( "leaderboard.p", "wb" ) )
 ```
-After streaming, you can copy the last entry from the terminal to this file.
+
+### Execute
 
 When ready, run the bot with `python twitch.py`
