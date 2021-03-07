@@ -83,6 +83,8 @@ class Tsumego(object):
             print(f"invalid coordinates: {yc+xc}")
             return f"{x}{y}?! WutFace"
         
+        display.update_move(f"{x.upper()}{y}")
+        
         time.sleep(1)
         result = self.solution_check()
         last = None

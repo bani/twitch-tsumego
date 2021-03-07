@@ -28,19 +28,28 @@ def update_leaderboard(players, last):
         
     leaderboard.refresh()
 
+def update_move(coords):
+    leaderboard['m'].update(coords.ljust(10))    
+    leaderboard.refresh()
+
+
 sg.theme('DarkPurple')   # Add a touch of color
-font = {'font': 'Courier 16', 'text_color': 'white'}
-font2 = {'font': 'Sans-Serif 20', 'text_color': 'white'}
+small = {'font': 'Courier 16', 'text_color': 'white'}
+medium = {'font': 'Sans-Serif 20', 'text_color': 'white'}
+big = {'font': 'Sans-Serif 80', 'text_color': 'white'}
 
 layout = [
-            [sg.Text(''.ljust(W+10), key=1, **font)],
-            [sg.Text(''.ljust(W+10), key=2, **font)],
-            [sg.Text(''.ljust(W+10), key=3, **font)],
-            [sg.Text(''.ljust(W+10), key=4, **font)],
-            [sg.Text(''.ljust(W+10), key=5, **font)],
-            [sg.Text(' ', **font)],
-            [sg.Text('Last correct answer:', **font2)],
-            [sg.Text(''.ljust(W+10), key=0, **font2)], ]
+            [sg.Text(''.ljust(W+10), key=1, **small)],
+            [sg.Text(''.ljust(W+10), key=2, **small)],
+            [sg.Text(''.ljust(W+10), key=3, **small)],
+            [sg.Text(''.ljust(W+10), key=4, **small)],
+            [sg.Text(''.ljust(W+10), key=5, **small)],
+            [sg.Text(' ', **small)],
+            [sg.Text('Last correct answer:', **medium)],
+            [sg.Text(''.ljust(W+10), key=0, **medium)],
+            [sg.Text(' ', **small)],
+            [sg.Text('Last move:', **medium)],
+            [sg.Text(''.ljust(10), key='m', **big)], ]
 
 leaderboard = sg.Window('Top Players', layout, alpha_channel=0.7)
 
