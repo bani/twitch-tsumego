@@ -22,7 +22,7 @@ bot = commands.Bot(
 async def event_ready():
     'Called once when the bot goes online.'
     print(f"{os.environ['BOT_NICK']} is online!")
-    logging.basicConfig(filename='chat.log', format='%(asctime)s %(message)s', datefmt='%I:%M', level=logging.INFO)
+    logging.basicConfig(filename='../chat.log', format='%(asctime)s %(message)s', datefmt='%I:%M', level=logging.INFO)
 
 @bot.event
 async def event_message(ctx):
@@ -51,13 +51,14 @@ async def event_message(ctx):
 async def help(ctx):
     help_text1 = """
 Enter the coordinates where you'd like to play in the chat (e.g. A1). 
+Win one point for final correct move, lose one point for incorrect ones. 
 If you need to enter the same coordinate twice in a row, you can switch between upper and lower case. You can also enter multiple coordinates in one message.
-Other available commands: 
     """
     help_text2 = """
-!rank: change the rank of the next problem (e.g. !rank 10k);
-!next: skip to the next problem (can only be used after 2 minutes since last move).
-!review: URL of last problem; 
+Other available commands: 
+!rank: change the rank of the next problem (e.g. !rank 10k); 
+!next: skip to the next problem (can only be used after 2 minutes since last move); 
+!review: URL of previous problem; 
 !link: URL for current problem; 
 !points: check your current points
     """
@@ -104,8 +105,8 @@ async def rank(ctx):
 async def coords(ctx):
     tsumego.coordinates()
 
-@bot.command(name='save')
-async def save(ctx):
+@bot.command(name='output')
+async def output(ctx):
     print(tsumego.players)
 
 @bot.command(name='leaderboard')

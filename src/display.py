@@ -7,31 +7,31 @@ import time
 
 W = 30 # name width
 
-def open_window():
+def open_leaderboard():
     while True:
-        event, value = window.read()
+        event, value = leaderboard.read()
         if event == sg.WIN_CLOSED:
             break
 
-    window.close()
+    leaderboard.close()
 
-def update(players, last):
+def update_leaderboard(players, last):
     i = 1
     for (k,v) in sorted(players.items(), key=lambda x: -x[1]):
         entry = f"{i}. {k.ljust(W-10)} {str(v).rjust(3)}"
-        window[i].update(entry)
+        leaderboard[i].update(entry)
         i+=1
         if i > 5:
             break
     if last:
-        window[0].update(f"{last} ({players[last] if last != 'beginnergo' else '-∞'})".ljust(W))
+        leaderboard[0].update(f"{last} ({players[last] if last != 'beginnergo' else '-∞'})".ljust(W))
         
-    window.refresh()
+    leaderboard.refresh()
 
 sg.theme('DarkPurple')   # Add a touch of color
 font = {'font': 'Courier 16', 'text_color': 'white'}
 font2 = {'font': 'Sans-Serif 20', 'text_color': 'white'}
-# All the stuff inside your window.
+
 layout = [
             [sg.Text(''.ljust(W+10), key=1, **font)],
             [sg.Text(''.ljust(W+10), key=2, **font)],
@@ -42,10 +42,9 @@ layout = [
             [sg.Text('Last correct answer:', **font2)],
             [sg.Text(''.ljust(W+10), key=0, **font2)], ]
 
-# Create the Window
-window = sg.Window('Top Players', layout)
+leaderboard = sg.Window('Top Players', layout, alpha_channel=0.7)
 
-t = threading.Thread(target=open_window)
+t = threading.Thread(target=open_leaderboard)
 t.start()
 time.sleep(1)
 

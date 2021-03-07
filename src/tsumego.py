@@ -5,7 +5,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import Select
 import time
 import re
-import rank
+import display
 import threading
 import pickle
 
@@ -23,10 +23,7 @@ class Tsumego(object):
         self.players = pickle.load( open( "leaderboard.p", "rb" ) )
         self.time = time.localtime()
         self.wait = False
-        rank.update(self.players, None)
-        time.sleep(1)
-        self.update_rank('12 kyu')
-        self.load_next(0)
+        display.update_leaderboard(self.players, None)
 
     def fancy_click(self, id):
         self.driver.execute_script("arguments[0].click();", self.driver.find_element_by_id(id))
@@ -109,7 +106,7 @@ class Tsumego(object):
             message = f"{x}{y}?! WutFace"
         
         pickle.dump( self.players, open( "leaderboard.p", "wb" ) )
-        rank.update(self.players, last)
+        display.update_leaderboard(self.players, last)
         
         return message
 
