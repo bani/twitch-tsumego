@@ -2,6 +2,7 @@
 
 import os
 import re
+import logging
 from twitchio.ext import commands
 from dotenv import load_dotenv
 import tsumego
@@ -21,6 +22,7 @@ bot = commands.Bot(
 async def event_ready():
     'Called once when the bot goes online.'
     print(f"{os.environ['BOT_NICK']} is online!")
+    logging.basicConfig(filename='chat.log', format='%(asctime)s %(message)s', datefmt='%I:%M', level=logging.INFO)
 
 @bot.event
 async def event_message(ctx):
@@ -42,7 +44,7 @@ async def event_message(ctx):
             if 'Keep going' not in result:
                 break
     else:
-        print(f"{ctx.author.name}: {ctx.content}")
+        logging.info(f"{ctx.author.name}: {ctx.content}")
 
 
 @bot.command(name='help')

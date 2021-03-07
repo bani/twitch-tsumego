@@ -1,4 +1,5 @@
 *.ipynb
+*.log
 .vscode/
 points.py
 leaderboard.p
