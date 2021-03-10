@@ -6,6 +6,7 @@ import time
 
 
 W = 30 # name width
+last_correct = 'baniverse'
 
 def open_leaderboard():
     while True:
@@ -16,6 +17,7 @@ def open_leaderboard():
     leaderboard.close()
 
 def update_leaderboard(players, last):
+    global last_correct
     i = 1
     for (k,v) in sorted(players.items(), key=lambda x: -x[1]):
         entry = f"{i}. {k.ljust(W-10)} {str(v).rjust(3)}"
@@ -24,8 +26,9 @@ def update_leaderboard(players, last):
         if i > 5:
             break
     if last:
-        leaderboard[0].update(f"{last} ({players[last] if last != 'beginnergo' else '-∞'})".ljust(W))
-        
+        last_correct = last
+    
+    leaderboard[0].update(f"{last_correct} ({players[last_correct] if last_correct != 'beginnergo' else '-∞'})".ljust(W))
     leaderboard.refresh()
 
 def update_move(coords):
