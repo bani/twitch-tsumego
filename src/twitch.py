@@ -52,7 +52,7 @@ async def help(ctx):
     help_text1 = """
 Enter the coordinates where you'd like to play in the chat (e.g. A1). 
 Win one point for final correct move, lose one point for incorrect ones. 
-If you need to enter the same coordinate twice in a row, you can switch between upper and lower case. You can also enter multiple coordinates in one message.
+If you need to enter the same coordinate twice in a row, add some question marks to pass Twitch's spam filter (e.g. A1???). You can also enter multiple coordinates in one message.
     """
     help_text2 = """
 Other available commands: 
